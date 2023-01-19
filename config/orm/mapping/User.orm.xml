@@ -14,9 +14,12 @@
         <field name="token" length="100" nullable="true" />
         <field name="active" type="boolean" />
         <field name="resetPasswordToken" length="100" nullable="true" />
-        <field name="createdBy" type="int" length="11" nullable="true" />
         <field name="createdAt" type="datetime" />
         <field name="updatedAt" type="datetime" />
+
+        <many-to-one field="createdBy" target-entity="App\Entity\User">
+            <join-column name="created_by" on-delete="SET NULL"/>
+        </many-to-one>
 
     </entity>
 </doctrine-mapping>

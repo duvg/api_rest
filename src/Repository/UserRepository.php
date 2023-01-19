@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\User;
-use App\Exception\User\UserNotFoundException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\Exception\ORMException;
 
@@ -25,6 +24,16 @@ class UserRepository extends BaseRepository
     public function save(User $user): void
     {
         $this->saveEntity($user);
+    }
+
+    public function getAll(): array
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->from('App:User', 'u')
+            ->select('u')
+            ->getQuery()
+            ->getResult();
     }
 
     /**

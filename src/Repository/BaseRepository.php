@@ -24,7 +24,7 @@ abstract class BaseRepository
     {
         $this->managerRegistry = $managerRegistry;
         $this->connection = $connection;
-        $this->objectRepository = $this->getEntityManager()->getRepository(self::entityClass());
+        $this->objectRepository = $this->getEntityManager()->getRepository($this->entityClass());
     }
 
     /**

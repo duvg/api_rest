@@ -11,32 +11,32 @@ class User implements UserInterface
     private int $id;
     private string $name;
     private string $email;
-    private string $password;
+    private ?string $password;
     private ?string $telephone;
     private ?string $address;
     private ?string $avatar;
     private ?string $token;
     private ?string $resetPasswordToken;
     private bool $active;
-    private ?int $createdBy;
+    private ?User $createdBy;
     private \DateTime $createdAt;
     private \DateTime $updatedAt;
 
     /**
      * User constructor.
      */
-    public function __construct(string $name, string $email, string $password, int $createdBy)
+    public function __construct(string $name, string $email)
     {
         $this->name = $name;
         $this->setEmail($email);
-        $this->password = $password;
+        $this->password = '';
         $this->telephone = null;
         $this->address = null;
         $this->avatar = null;
         $this->token = \sha1(\uniqid('', true));
         $this->resetPasswordToken = null;
         $this->active = false;
-        $this->createdBy = $createdBy;
+        $this->createdBy = null;
         $this->createdAt = new \DateTime();
         $this->markAsUpdated();
     }
@@ -142,12 +142,19 @@ class User implements UserInterface
         $this->active = $active;
     }
 
-    public function getCreatedBy(): ?int
+    public function getCreatedBy(): ?array
     {
-        return $this->createdBy;
+        if (!$this->createdBy)
+            return null;
+
+        $data = [
+            'id' => $this->createdBy->getId(),
+            'name' => $this->createdBy->getName()
+        ];
+        return $data;
     }
 
-    public function setCreated(?string $createdBy): void
+    public function setCreated(?User $createdBy): void
     {
         $this->createdBy = $createdBy;
     }
