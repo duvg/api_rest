@@ -36,6 +36,15 @@ class UserRepository extends BaseRepository
             ->getResult();
     }
 
+    public function findOneByEmailOrFail(string $email): User
+    {
+        if (null === $user = $this->objectRepository->findOneBy(['email' => $email])) {
+            throw UserNotFoundException::fromEmail($email);
+        }
+
+        return $user;
+    }
+
     /**
      * Remove user entity.
      *
