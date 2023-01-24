@@ -15,7 +15,10 @@ class UserRegisterService
     private UserRepository $userRepository;
     private EncoderService $encoderService;
 
-    public function __construct(UserRepository $userRepository, EncoderService $encoderService)
+    public function __construct(
+        UserRepository $userRepository,
+        EncoderService $encoderService
+    )
     {
         $this->userRepository = $userRepository;
         $this->encoderService = $encoderService;
@@ -34,10 +37,5 @@ class UserRegisterService
         }
 
         return $user;
-    }
-
-    public  function getAll(): array
-    {
-        return $this->userRepository->getAll();
     }
 }
